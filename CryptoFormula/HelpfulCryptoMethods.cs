@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
-using CryptoFormula.Models;
+using CryptoFormulaLibrary.Models;
 
-namespace CryptoFormula
+namespace CryptoFormulaLibrary
 {
     public static partial class CryptoFormula
     {

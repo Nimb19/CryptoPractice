@@ -3,9 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Numerics;
 using HelpfulLibrary;
-using CryptoFormula.Models;
+using CryptoFormulaLibrary.Models;
 
-namespace CryptoFormula
+namespace CryptoFormulaLibrary
 {
     public static partial class CryptoFormula
     {
@@ -78,9 +78,9 @@ namespace CryptoFormula
             }
 
             if (result.БылЛиМинусНапротивЕдиницы == false)
-                return result.ЧислоНапротивЕдиницы.Value;
+                return result.ЧислоНапротивЕдиницы;
             else
-                return (module - result.ЧислоНапротивЕдиницы).Value;
+                return module - result.ЧислоНапротивЕдиницы;
         }
     }
 }

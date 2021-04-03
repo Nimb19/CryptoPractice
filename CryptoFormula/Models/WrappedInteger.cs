@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
-namespace CryptoFormula.Models
+namespace CryptoFormulaLibrary.Models
 {
     public struct WrappedInteger
     {
