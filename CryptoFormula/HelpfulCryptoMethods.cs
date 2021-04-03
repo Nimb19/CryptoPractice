@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
+using CryptoFormula.Models;
 
 namespace CryptoFormula
 {
     public static partial class CryptoFormula
     {
-        public static List<int> РазложитьНаПростыеМножители(this int module)
+        public static List<int> РазложитьНаПростыеМножители(this WrappedInteger num)
         {
             var listDivisors = new List<int>();
 
-            for (; module % 2 == 0; module /= 2)
+            for (; num % 2 == 0; num /= 2)
                 listDivisors.Add(2);
 
-            for (int i = 3; i <= module;)
+            for (int i = 3; i <= num;)
             {
-                if (module % i == 0)
+                if (num % i == 0)
                 {
                     listDivisors.Add(i);
-                    module /= i;
+                    num /= i;
                 }
                 else
                     i += 2;
@@ -27,19 +28,19 @@ namespace CryptoFormula
         }
 
         /// <summary> Нахождение наибольшего общего делителя чисел a и b. </summary>
-        public static BigInteger НОД(int a, int b)
+        public static BigInteger НайтиНОД(WrappedInteger a, WrappedInteger b)
         {
-            if (a == 0) return b;
-            else if (b == 0) return a;
+            if (a == 0) return b.Value;
+            else if (b == 0) return a.Value;
 
-            else return НОД(b, a % b);
+            else return НайтиНОД(b, a % b);
         }
 
-        private static BigInteger ВозвестиВСтепень(this int x, int y)
+        public static BigInteger ВозвестиВСтепень(this WrappedInteger x, WrappedInteger y)
         {
-            BigInteger result = x;
+            BigInteger result = x.Value;
             for (int i = 2; i <= y; i++)
-                result *= x;
+                result *= x.Value;
 
             return result;
         }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Numerics;
 using HelpfulLibrary;
+using CryptoFormula.Models;
 
 namespace CryptoFormula
 {
@@ -12,9 +13,10 @@ namespace CryptoFormula
         /// Формула Эйлера для нахождения мультипликативно обратных элементов. 
         /// Если не будет решения, то придёт null.
         /// </summary>
-        public static BigInteger? ФормулаЭйлера(int module, int num, out List<int> divisorsList, out Exception exception)
+        /// <param name="solutionError"> Подробности об ошибке, если была. </param>
+        public static BigInteger? ФормулаЭйлера(WrappedInteger module, WrappedInteger num, out List<int> divisorsList, out string solutionError)
         {
-            exception = null;
+            solutionError = null;
             divisorsList = module.РазложитьНаПростыеМножители();
 
             if (divisorsList.Count == 1)
@@ -25,7 +27,7 @@ namespace CryptoFormula
                     return num.ВозвестиВСтепень(divisorsList.Select(x => x -= 1).Aggregate((x, y) => x * y) - 1);
                 else
                 {
-                    exception = new Exception($"Нет решения. Множители повторяются. ");
+                    solutionError = $"Нет решения. Множители повторяются.";
                     return null;
                 }
             }
@@ -35,19 +37,19 @@ namespace CryptoFormula
         /// Алгоритм Евклида для нахождения мультипликативно обратных элементов. Если решения не было, то будет возвращён null. 
         /// Так же, в этом случае будет выведена подробная информация о ошибке в переменную Exception.
         /// </summary>
-        /// <param name="exception"> Подробности об ошибке, если была. </param>
-        public static BigInteger? АлгоритмЕвклида(int module, int num, out Exception exception)
+        /// <param name="solutionError"> Подробности об ошибке, если была. </param>
+        public static BigInteger? АлгоритмЕвклида(WrappedInteger module, WrappedInteger num, out string solutionError)
         {
-            exception = null;
-            (int? ЧислоНапротивЕдиницы, bool? БылЛиМинусНапротивЕдиницы) result = (null, null);
+            solutionError = null;
+            (BigInteger? ЧислоНапротивЕдиницы, bool? БылЛиМинусНапротивЕдиницы) result = (null, null);
 
-            var leftList = new Dictionary<(int, int), int>();
-            var rightList = new List<int>() { 0, 1 };
+            var leftList = new Dictionary<(BigInteger, BigInteger), BigInteger>();
+            var rightList = new List<BigInteger>() { 0, 1 };
             int i = 0;
 
             { // Ввод данных в алгоритм
                 i++;
-                leftList.Add((module, num), module % num);
+                leftList.Add((module.Value, num.Value), module % num);
                 rightList.Add(module / num * rightList.Last() + rightList[rightList.Count - 2]);
                 if (leftList.Last().Value == 1) result = (rightList.Last(), i % 2 == 1);
             }
@@ -65,20 +67,20 @@ namespace CryptoFormula
 
             if (module != rightList.Last())
             { 
-                exception = new Exception($"Число напротив нуля не сошлось с {nameof(module)}: {module} != {rightList.Last()}");
+                solutionError = $"Модуль не сошёлся с числом напротив нуля: {module} != {rightList.Last()}.";
                 return null;
             }
 
             if (result.ЧислоНапротивЕдиницы == null)
             {
-                exception = new Exception($"Не было единицы: {leftList.Values.JoinToString()}");
+                solutionError = $"В левом списке не было единицы.";
                 return null;
             }
 
             if (result.БылЛиМинусНапротивЕдиницы == false)
-                return result.ЧислоНапротивЕдиницы;
+                return result.ЧислоНапротивЕдиницы.Value;
             else
-                return module - result.ЧислоНапротивЕдиницы;
+                return (module - result.ЧислоНапротивЕдиницы).Value;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoFormula.Models;
 using HelpfulLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +13,7 @@ namespace CryptoFormula.Tests
         {
             var алгоритмЕвклидаTest = new Func<int, int, int, bool>(
                 (p, x, expected) =>
-                    expected == CryptoFormula.АлгоритмЕвклида(p, x, out var exc) && exc == null
+                    CryptoFormula.АлгоритмЕвклида(p, x, out var exc) == expected && exc == null
             );
 
             Assert.IsTrue(алгоритмЕвклидаTest(17, 4, 13));
