@@ -23,16 +23,18 @@ namespace CryptoFormulaLibrary.Models
         public static implicit operator WrappedInteger(int value) => new WrappedInteger(new BigInteger(value));
         public static implicit operator WrappedInteger(long value) => new WrappedInteger(new BigInteger(value));
 
-        public static BigInteger operator -(WrappedInteger left, WrappedInteger right) => left.Value - right.Value;
-        public static BigInteger operator +(WrappedInteger left, WrappedInteger right) => left.Value + right.Value;
-        public static BigInteger operator *(WrappedInteger left, WrappedInteger right) => left.Value * right.Value;
-        public static BigInteger operator /(WrappedInteger left, WrappedInteger right) => left.Value / right.Value;
-        public static BigInteger operator %(WrappedInteger left, WrappedInteger right) => left.Value % right.Value;
-        public static bool operator ==(WrappedInteger left, WrappedInteger right) => left.Value == right.Value;
-        public static bool operator !=(WrappedInteger left, WrappedInteger right) => left.Value != right.Value;
-        public static bool operator <=(WrappedInteger left, WrappedInteger right) => left.Value <= right.Value;
-        public static bool operator >=(WrappedInteger left, WrappedInteger right) => left.Value >= right.Value;
+        public static BigInteger operator  -(WrappedInteger left, WrappedInteger right) => left.Value - right.Value;
+        public static BigInteger operator  +(WrappedInteger left, WrappedInteger right) => left.Value + right.Value;
+        public static BigInteger operator  *(WrappedInteger left, WrappedInteger right) => left.Value * right.Value;
+        public static BigInteger operator  /(WrappedInteger left, WrappedInteger right) => left.Value / right.Value;
+        public static BigInteger operator  %(WrappedInteger left, WrappedInteger right) => left.Value % right.Value;
+        public static bool       operator ==(WrappedInteger left, WrappedInteger right) => left.Value == right.Value;
+        public static bool       operator !=(WrappedInteger left, WrappedInteger right) => left.Value != right.Value;
+        public static bool       operator <=(WrappedInteger left, WrappedInteger right) => left.Value <= right.Value;
+        public static bool       operator >=(WrappedInteger left, WrappedInteger right) => left.Value >= right.Value;
 
         public override string ToString() => Value.ToString();
+        public override bool Equals(object obj) => base.Equals(obj);
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

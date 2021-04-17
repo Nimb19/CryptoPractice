@@ -10,7 +10,7 @@ namespace HelpfulLibrary
     public static class HelpfulExtensions
     {
         /// <summary>
-        /// Инициализирует string и integer свойства указанного объекта.
+        /// Инициализирует строковые и целочисленные свойства указанного объекта.
         /// </summary>
         public static T InitStringAndIntProps<T>(this T obj, int? numberAfterName = null)
         {
@@ -45,6 +45,35 @@ namespace HelpfulLibrary
             return result.ToString();
         }
 
+        public static T RandomElement<T>(this IEnumerable<T> iEnum, Random rnd = null, int? first = null, int? last = null)
+        {
+            if (iEnum == null || iEnum.Count() == 0) 
+                return default;
+
+            var internalRnd = rnd ?? new Random(Environment.TickCount);
+
+            var internalFirst = first != null ? first.Value : 0;
+            if (internalFirst < 0)
+                internalFirst = 0;
+            
+            var internalLast = last != null ? last.Value : iEnum.Count();
+            if (iEnum.Count() <= internalLast)
+                internalLast = iEnum.Count() - 1;
+
+            if (internalFirst > internalLast)
+                HelpfulMethods.SwapValues(ref internalFirst, ref internalLast);
+
+            var elIndex = internalRnd.Next(internalFirst, internalLast);
+            return iEnum.ElementAt(elIndex);
+        }
+
+        public static IEnumerable<char> AddFromTo(this IEnumerable<char> charArray, char from, char to)
+        {
+            var result = charArray.ToList();
+            result.AddRange(HelpfulMethods.FromTo(from, to));
+            return result;
+        } 
+        
         public static T TryConvertTo<T>(this object obj, out bool isSuccess)
         {
             try
@@ -55,7 +84,7 @@ namespace HelpfulLibrary
             catch
             {
                 isSuccess = false;
-                return default(T);
+                return default;
             }
         }
 

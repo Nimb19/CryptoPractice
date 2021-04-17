@@ -24,25 +24,17 @@ namespace CryptoPractice_1._2
                 var module = int.Parse(moduleTextBox.Text.Trim());
                 var number = int.Parse(numberTextBox.Text.Trim());
 
-                List<int> divisors = null;
                 string eulerSolutionErr = null;
                 string euclideSolutionErr = null;
-                var eulerResult = await Task.Run(() => CryptoFormula.ФормулаЭйлера(module, number, out divisors, out eulerSolutionErr));
+                var eulerResult = await Task.Run(() => CryptoFormula.ФормулаЭйлера(module, number, out var divisors, out eulerSolutionErr));
                 var euclideResult = await Task.Run(() => CryptoFormula.АлгоритмЕвклида(module, number, out euclideSolutionErr));
 
-                if (eulerResult != null)
-                    resultEulerTextBox.Text = eulerResult.ToString();
-                else
-                    resultEulerTextBox.Text = eulerSolutionErr;
-
-                if (euclideResult != null)
-                    resultEuclideTextBox.Text = euclideResult.ToString();
-                else
-                    resultEuclideTextBox.Text = euclideSolutionErr;
+                resultEulerTextBox.Text = eulerResult != null ? eulerResult.ToString() : eulerSolutionErr;
+                resultEuclideTextBox.Text = euclideResult != null ? euclideResult.ToString() : euclideSolutionErr;
             }
             catch (Exception exception)
             {
-                MessageBox.Show($"{exception}");
+                MessageBox.Show(exception.ToString());
             }
         }
     }

@@ -20,7 +20,7 @@ namespace HelpfulLibrary
         /// </summary>
         public static IEnumerable<char> FromTo(char start, char end)
         {
-            for (int i = start; i < end; i++)
+            for (int i = start; i <= end; i++)
                 yield return (char)i;
         }
 
@@ -29,5 +29,15 @@ namespace HelpfulLibrary
         /// </summary>
         public static string JoinToString<T>(string separator = "; ", params T[] list) =>
             string.Join(separator, list.Select(x => x.ToString()));
+
+        /// <summary>
+        /// Если класс ссылочный, то в первом параметре будет ссылка на второй, второй будет Json копией первого, не факт что все связи останутся
+        /// </summary>
+        public static void SwapValues<T>(ref T left, ref T right)
+        {
+            var leftCopy = left;
+            left = right;
+            right = leftCopy;
+        }
     }
 }

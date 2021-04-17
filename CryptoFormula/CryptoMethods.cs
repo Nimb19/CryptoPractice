@@ -35,7 +35,7 @@ namespace CryptoFormulaLibrary
 
         /// <summary>
         /// Алгоритм Евклида для нахождения мультипликативно обратных элементов. Если решения не было, то будет возвращён null. 
-        /// Так же, в этом случае будет выведена подробная информация о ошибке в переменную Exception.
+        /// Так же, в этом случае будет выведена подробная информация о ошибке в переменную solutionError.
         /// </summary>
         /// <param name="solutionError"> Подробности об ошибке, если была. </param>
         public static BigInteger? АлгоритмЕвклида(WrappedInteger module, WrappedInteger num, out string solutionError)
@@ -51,7 +51,8 @@ namespace CryptoFormulaLibrary
                 i++;
                 leftList.Add((module.Value, num.Value), module % num);
                 rightList.Add(module / num * rightList.Last() + rightList[rightList.Count - 2]);
-                if (leftList.Last().Value == 1) result = (rightList.Last(), i % 2 == 1);
+                if (leftList.Last().Value == 1) 
+                    result = (rightList.Last(), i % 2 == 1);
             }
 
             while (leftList.Last().Value != 0)
@@ -62,7 +63,8 @@ namespace CryptoFormulaLibrary
                 leftList.Add((currLeftItem, currRightItem), currLeftItem % currRightItem);
                 rightList.Add((currLeftItem / currRightItem) * rightList.Last() + rightList[rightList.Count - 2]);
 
-                if (leftList.Last().Value == 1) result = (rightList.Last(), i % 2 == 1);
+                if (leftList.Last().Value == 1) 
+                    result = (rightList.Last(), i % 2 == 1);
             }
 
             if (module != rightList.Last())

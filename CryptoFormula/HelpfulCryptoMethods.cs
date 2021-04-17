@@ -36,13 +36,34 @@ namespace CryptoFormulaLibrary
             else return НайтиНОД(b, a % b);
         }
 
-        public static BigInteger ВозвестиВСтепень(this WrappedInteger x, WrappedInteger y)
+        public static BigInteger ВозвестиВСтепень(this WrappedInteger число, WrappedInteger степень)
         {
-            BigInteger result = x.Value;
-            for (int i = 2; i <= y; i++)
-                result *= x.Value;
+            var result = число.Value;
+            for (int i = 2; i <= степень; i++)
+                result *= число.Value;
 
             return result;
         }
+
+
+        #region BigInteger ext
+
+        public static BigInteger ВозвестиВСтепень(this BigInteger число, BigInteger степень) =>
+            ((WrappedInteger)число).ВозвестиВСтепень(степень);
+
+        public static List<int> РазложитьНаПростыеМножители(this BigInteger num) =>
+            ((WrappedInteger)num).РазложитьНаПростыеМножители();
+
+        #endregion
+
+        #region Int ext
+
+        public static BigInteger ВозвестиВСтепень(this int число, int степень) =>
+            ((WrappedInteger)число).ВозвестиВСтепень(степень);
+
+        public static List<int> РазложитьНаПростыеМножители(this int num) =>
+            ((WrappedInteger)num).РазложитьНаПростыеМножители();
+
+        #endregion
     }
 }

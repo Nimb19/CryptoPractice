@@ -28,7 +28,7 @@
                 Вычисление мультипликативно обратных элементов в поле вычетов
             </TextBlock>
 
-            <Grid Grid.Row="1" Margin="10, 0 10, 10">
+            <Grid Grid.Row="1" Margin="10, 0 10, 0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -43,7 +43,7 @@
                 <TextBox x:Name="numberTextBox" Grid.Row="0" Grid.Column="1" Opacity="0.5" Margin="7" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                 <TextBlock Text="Модуль: " Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <TextBox x:Name="moduleTextBox" Grid.Row="1" Grid.Column="1" Opacity="0.5" Margin="7" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-                <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="15, 5, 15 5" Content="Найти обратный элемент" x:Name="SolveBtn" Click="SolveBtn_Click"/>
+                <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="15, 5, 15, 0" Content="Найти обратный элемент" x:Name="SolveBtn" Click="SolveBtn_Click"/>
             </Grid>
 
             <Grid Grid.Row="2" Margin="10, 0, 10, 10">
