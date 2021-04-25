@@ -10,7 +10,7 @@ namespace CryptoFormulaLibrary.CryptosystemControllers
         public static WrappedInteger CalculateOpenedKey(WrappedInteger closedKey, int g, int p) => 
             g.ВозвестиВСтепень(closedKey) % p;
 
-        public static (WrappedInteger R, WrappedInteger E) GetMessage(ElgamalSubscriber from, ElgamalSubscriber to, int msg, int k)
+        public static (WrappedInteger R, WrappedInteger E) GetMessageKeys(ElgamalSubscriber from, ElgamalSubscriber to, int msg, int k)
         {
             var r = to.G.ВозвестиВСтепень(k) % to.P;
             var e = msg * to.OpenedKey % to.P;
@@ -20,8 +20,8 @@ namespace CryptoFormulaLibrary.CryptosystemControllers
         public static (BigInteger P, BigInteger G) GenerateKeys(Random random)
         {
             PrimeNumberGenerator.PrimeRandom = random;
-            var p = PrimeNumberGenerator.GeneratePrimeNumber();
-            var g = random.Next(2, (int)p - 1);
+            var p = PrimeNumberGenerator.GeneratePrimeNumber(1000, int.MaxValue);
+            var g = random.Next(2, p - 1);
             return (p, g);
         }
     }

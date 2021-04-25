@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 using CryptoFormulaLibrary.CryptosystemControllers;
@@ -12,7 +14,7 @@ namespace CryptoPractice_2._1
 {
     public partial class MainForm : Form
     {
-        private ObservableCollection<Subscriber> _subscribers = new ObservableCollection<Subscriber>();
+        internal ObservableCollection<SubscriberParams> SubscribersParams = new ObservableCollection<SubscriberParams>();
         private readonly Random _random = new Random();
 
         public MainForm()
@@ -23,16 +25,37 @@ namespace CryptoPractice_2._1
             _random = new Random();
             PrimeRandom = _random;
 
-            _subscribers.CollectionChanged += Subscribers_CollectionChanged;
+            SubscribersParams.CollectionChanged += SubscribersParams_CollectionChanged;
         }
 
-        private void Subscribers_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void SubscriberParams_FormClosing(object sender, EventArgs e)
         {
-            var newCollection = (IList)e.NewItems.SyncRoot;
-            foreach (var element in newCollection)
+            var closingSubName = (sender as SubscriberForm).Subscriber.Name;
+            SubscribersParams.Remove(SubscribersParams.First(x => x.ElgamalSubscriber.Name == closingSubName));
+        }
+
+        private void SubscribersParams_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var newCollection = (IList)e.NewItems?.SyncRoot;
+            if (newCollection != null) 
             {
-                var sub = element as Subscriber;
-                subscribersDataGrid.Rows.Add(sub.Name, sub.OpenedKey);
+                foreach (var element in newCollection)
+                {
+                    var sub = (element as SubscriberParams).ElgamalSubscriber;
+                    subscribersDataGrid.Rows.Add(sub.Name, sub.OpenedKey);
+                }
+            }
+
+            var oldCollection = (IList)e.OldItems?.SyncRoot;
+            if (oldCollection != null)
+            {
+                foreach (var element in oldCollection)
+                {
+                    var sub = (element as SubscriberParams).ElgamalSubscriber;
+                    var row = subscribersDataGrid.GetRowByValue(sub.Name);
+
+                    subscribersDataGrid.Rows.Remove(row);
+                }
             }
         }
 
@@ -60,7 +83,13 @@ namespace CryptoPractice_2._1
                 var g = int.Parse(tbParamG.Text);
                 var p = int.Parse(tbParamP.Text);
 
-                _subscribers.Add(new ElgamalSubscriber(openedKey, closedKey, name, p, g));
+                var newSub = new ElgamalSubscriber(openedKey, closedKey, name, p, g);
+                var form = new SubscriberForm(SubscribersParams, newSub);
+                form.FormClosing += SubscriberParams_FormClosing;
+                SubscribersParams.Add(new SubscriberParams(form, newSub));
+                form.Show();
+
+                BtSetRandomSubscriberParams(this, e);
             });
         }
 
