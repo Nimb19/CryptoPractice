@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HelpfulLibrary
 {
     public static class HelpfulMethods
     {
+        private static Random _random = new Random();
+
         /// <summary>
         /// Создаёт коллекцию указанного типа и инициализирует string и integer свойства.
         /// </summary>
@@ -39,5 +42,65 @@ namespace HelpfulLibrary
             left = right;
             right = leftCopy;
         }
+
+        public static string GetRandomName(Random random = null)
+        {
+            var names = Enum.GetNames(typeof(Names));
+            return names[(random ?? _random).Next(0, names.Length - 1)];
+        }
+    }
+
+    enum Names 
+    {
+        Bula       ,
+        Lida       ,
+        Soledad    ,
+        Earle      ,
+        Burl       ,
+        Garland    ,
+        Arden      ,
+        Brittny    ,
+        Marilu     ,
+        Junie      ,
+        Lauralee   ,
+        Natashia   ,
+        Janeen     ,
+        Monty      ,
+        Lillia     ,
+        Emmy       ,
+        Criselda   ,
+        Tami       ,
+        Jannie     ,
+        Selene     ,
+        Larisa     ,
+        Stacee     ,
+        Alissa     ,
+        Sigrid     ,
+        Margy      ,
+        Barney     ,
+        Olga       ,
+        Eva        ,
+        Kyong      ,
+        Leighann   ,
+        Dorinda    ,
+        Graham     ,
+        Niesha     ,
+        Bruce      ,
+        Melonie    ,
+        Brittanie  ,
+        Marya      ,
+        Winifred   ,
+        Jeremiah   ,
+        Rowena     ,
+        Annalee    ,
+        Rina       ,
+        Polly      ,
+        Jacquelyne ,
+        Geoffrey   ,
+        James      ,
+        Aron       ,
+        Freeda     ,
+        Georgine   ,
+        Carmen     ,
     }
 }

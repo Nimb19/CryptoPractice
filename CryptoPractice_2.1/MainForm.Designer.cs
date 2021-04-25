@@ -44,11 +44,13 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tbClosedKey = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.dataGridHistory = new System.Windows.Forms.DataGridView();
+            this.subscribersDataGrid = new System.Windows.Forms.DataGridView();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnOpenedKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridHistory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.subscribersDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -133,7 +135,7 @@
             this.groupBox2.Size = new System.Drawing.Size(515, 181);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Настройки абонента:";
+            this.groupBox2.Text = "Настройки нового абонента:";
             // 
             // btSetRandomSubscriberParams
             // 
@@ -184,6 +186,7 @@
             this.tbClosedKey.Name = "tbClosedKey";
             this.tbClosedKey.Size = new System.Drawing.Size(100, 27);
             this.tbClosedKey.TabIndex = 6;
+            this.tbClosedKey.TextChanged += new System.EventHandler(this.TbClosedKey_TextChanged);
             // 
             // label5
             // 
@@ -194,22 +197,44 @@
             this.label5.TabIndex = 7;
             this.label5.Text = "Открытый ключ:";
             // 
-            // dataGridHistory
+            // subscribersDataGrid
             // 
-            this.dataGridHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridHistory.Location = new System.Drawing.Point(12, 351);
-            this.dataGridHistory.Name = "dataGridHistory";
-            this.dataGridHistory.Size = new System.Drawing.Size(515, 202);
-            this.dataGridHistory.TabIndex = 7;
+            this.subscribersDataGrid.AllowUserToAddRows = false;
+            this.subscribersDataGrid.AllowUserToDeleteRows = false;
+            this.subscribersDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.subscribersDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnName,
+            this.ColumnOpenedKey});
+            this.subscribersDataGrid.Location = new System.Drawing.Point(12, 351);
+            this.subscribersDataGrid.Name = "subscribersDataGrid";
+            this.subscribersDataGrid.ReadOnly = true;
+            this.subscribersDataGrid.Size = new System.Drawing.Size(515, 202);
+            this.subscribersDataGrid.TabIndex = 7;
+            // 
+            // ColumnName
+            // 
+            this.ColumnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.ColumnName.HeaderText = "Имя подписчика:";
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.ReadOnly = true;
+            this.ColumnName.Width = 156;
+            // 
+            // ColumnOpenedKey
+            // 
+            this.ColumnOpenedKey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.ColumnOpenedKey.HeaderText = "Открытый ключ";
+            this.ColumnOpenedKey.Name = "ColumnOpenedKey";
+            this.ColumnOpenedKey.ReadOnly = true;
+            this.ColumnOpenedKey.Width = 140;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(180, 327);
+            this.label3.Location = new System.Drawing.Point(210, 327);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(181, 21);
+            this.label3.Size = new System.Drawing.Size(122, 21);
             this.label3.TabIndex = 8;
-            this.label3.Text = "История сообщений:";
+            this.label3.Text = "Пользователи:";
             // 
             // MainForm
             // 
@@ -217,7 +242,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(539, 565);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.dataGridHistory);
+            this.Controls.Add(this.subscribersDataGrid);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -231,7 +256,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridHistory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.subscribersDataGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,7 +271,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.DataGridView dataGridHistory;
+        private System.Windows.Forms.DataGridView subscribersDataGrid;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbOpenedKey;
         private System.Windows.Forms.Label label4;
@@ -256,6 +281,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tbSubscriberName;
         private System.Windows.Forms.Button btSetRandomCommonParams;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnOpenedKey;
     }
 }
 
