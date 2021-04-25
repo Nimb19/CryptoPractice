@@ -48,22 +48,22 @@ namespace CryptoFormulaLibrary
 
         #region BigInteger ext
 
-        public static BigInteger ВозвестиВСтепень(this BigInteger число, BigInteger степень) =>
-            ((WrappedInteger)число).ВозвестиВСтепень(степень);
-
         public static List<int> РазложитьНаПростыеМножители(this BigInteger num) =>
             ((WrappedInteger)num).РазложитьНаПростыеМножители();
 
-        #endregion
+        public static BigInteger ВозвестиВСтепень(this BigInteger число, WrappedInteger степень) =>
+            ((WrappedInteger)число).ВозвестиВСтепень(степень);
+
+        #endregion BigInteger ext
 
         #region Int ext
-
-        public static BigInteger ВозвестиВСтепень(this int число, int степень) =>
-            ((WrappedInteger)число).ВозвестиВСтепень(степень);
 
         public static List<int> РазложитьНаПростыеМножители(this int num) =>
             ((WrappedInteger)num).РазложитьНаПростыеМножители();
 
-        #endregion
+        public static BigInteger ВозвестиВСтепень(this int число, WrappedInteger степень) =>
+            ((WrappedInteger)число).ВозвестиВСтепень(степень);
+
+        #endregion Int ext
     }
 }

@@ -23,5 +23,21 @@ namespace HelpfulLibrary
 
             throw new AssertFailedException(errorMessage ?? "Ошибки не возникло");
         }
+
+        public static void IsError<TException>(this Action action, string errorMessage = null)
+        {
+            try
+            {
+                action.Invoke();
+            } catch (Exception exc) when (exc.GetType() == typeof(TException))
+            {
+                return;
+            } catch (Exception exc)
+            {
+                throw new AssertFailedException(errorMessage ?? $"Возникла другая ошибка: {exc}");
+            }
+
+            throw new AssertFailedException(errorMessage ?? "Ошибки не возникло");
+        }
     }
 }
