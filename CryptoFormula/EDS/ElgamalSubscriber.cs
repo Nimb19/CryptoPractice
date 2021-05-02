@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CryptoFormulaLibrary.EDS;
+using CryptoFormulaLibrary.EDSAdapters;
 
 namespace CryptoFormulaLibrary.Models
 {
@@ -14,6 +13,7 @@ namespace CryptoFormulaLibrary.Models
         {
             P = p;
             G = g;
+            Controller = new ElGamalEDSController(this);
         }
     }
 }

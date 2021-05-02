@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 using Newtonsoft.Json;
@@ -27,6 +28,11 @@ namespace HelpfulLibrary
             }
 
             return obj;
+        }
+
+        public static int ToInt32(this BigInteger bigInteger)
+        {
+            return int.Parse(bigInteger.ToString());
         }
 
         /// <summary>

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Forms;
+using CryptoFormulaLibrary.EDS;
 using CryptoFormulaLibrary.Models;
 
 namespace CryptoPractice_2._1
@@ -11,9 +12,9 @@ namespace CryptoPractice_2._1
     public partial class SubscriberForm : Form
     {
         public ElgamalSubscriber Subscriber { get; private set; }
-        public ChatController ChatController { get; private set; }
+        public ChatController<ElgamalSubscriber> ChatController { get; private set; }
 
-        private const string GroupBoxNameConst = "@name";
+        private const string SubNameConst = "@name";
         private ObservableCollection<SubscriberParams> AllSubscribers;
 
         public SubscriberForm(ObservableCollection<SubscriberParams> collection, ElgamalSubscriber sub)
@@ -52,8 +53,8 @@ namespace CryptoPractice_2._1
             AllSubscribers.CollectionChanged += AllSubscribers_CollectionChanged;
             Subscriber = sub;
 
-            groupBoxParams.Text = groupBoxParams.Text.Replace(GroupBoxNameConst, sub.Name);
-            this.Text = this.Text.Replace(GroupBoxNameConst, sub.Name);
+            groupBoxParams.Text = groupBoxParams.Text.Replace(SubNameConst, sub.Name);
+            this.Text = this.Text.Replace(SubNameConst, sub.Name);
 
             tbParamP.Text = sub.P.ToString();
             tbParamG.Text = sub.G.ToString();
@@ -62,15 +63,15 @@ namespace CryptoPractice_2._1
 
             var subs = AllSubscribers.Select(x => x.ElgamalSubscriber.Name).Where(x => x != sub.Name);
             subComboBox.Items.AddRange(subs.ToArray());
-            ChatController = new ChatController(chatBox, sub);
+            ChatController = new ChatController<ElgamalSubscriber>(chatBox, sub);
         }
 
         private void ButtonSendMessage_Click(object sender, EventArgs e)
         {
-            var selectedSubName = subComboBox.SelectedItem.ToString();
-            var recipient = AllSubscribers.First(x => x.ElgamalSubscriber.Name == selectedSubName);
+            var selectedRecipientName = subComboBox.SelectedItem.ToString();
+            var recipient = AllSubscribers.First(x => x.ElgamalSubscriber.Name == selectedRecipientName);
             var text = tbMessage.Text.Trim();
-            recipient.SubscriberForm.ChatController.PushMessage(ChatController, text, text.GetHashCode());
+            ChatController.WriteMessageTo(recipient.SubscriberForm.ChatController, text);
         }
     }
 }

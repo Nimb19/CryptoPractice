@@ -5,10 +5,10 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
-using CryptoFormulaLibrary.CryptosystemControllers;
+using CryptoFormulaLibrary;
+using CryptoFormulaLibrary.EDS;
 using CryptoFormulaLibrary.Models;
 using HelpfulLibrary;
-using static CryptoFormulaLibrary.PrimeNumberGenerator;
 
 namespace CryptoPractice_2._1
 {
@@ -23,8 +23,6 @@ namespace CryptoPractice_2._1
             this.MaximizeBox = false;
 
             _random = new Random();
-            PrimeRandom = _random;
-
             SubscribersParams.CollectionChanged += SubscribersParams_CollectionChanged;
         }
 
@@ -67,7 +65,7 @@ namespace CryptoPractice_2._1
                 var g = int.Parse(tbParamG.Text);
                 var p = int.Parse(tbParamP.Text);
 
-                tbOpenedKey.Text = ElgamalCryptosystemController.CalculateOpenedKey(closedKey, g, p).ToString();
+                tbOpenedKey.Text = ElGamalEDSController.CalculateOpenedKey(closedKey, g, p).ToString();
             });
         }
 
@@ -95,15 +93,15 @@ namespace CryptoPractice_2._1
 
         private void BtSetRandomSubscriberParams(object sender, EventArgs e)
         {
-            tbClosedKey.Text = GeneratePrimeNumber(10, 100).ToString();
+            tbClosedKey.Text = PrimeNumberGenerator.GeneratePrimeNumber(10, 100, _random).ToString();
             tbSubscriberName.Text = HelpfulMethods.GetRandomName(_random);
         }
 
         private void BtSetRandomCommonParams_Click(object sender, EventArgs e)
         {
-            var pg = ElgamalCryptosystemController.GenerateKeys(_random);
-            tbParamP.Text = pg.P.ToString();
-            tbParamG.Text = pg.G.ToString();
+            var keys = ElGamalEDSController.GenerateKeys(_random);
+            tbParamP.Text = keys.P.ToString();
+            tbParamG.Text = keys.G.ToString();
         }
 
         private void CatchException(Action action)

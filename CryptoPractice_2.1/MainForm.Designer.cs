@@ -48,9 +48,14 @@
             this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnOpenedKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
+            this.dataGridViewHistory = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.subscribersDataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistory)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -205,10 +210,10 @@
             this.subscribersDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName,
             this.ColumnOpenedKey});
-            this.subscribersDataGrid.Location = new System.Drawing.Point(12, 351);
+            this.subscribersDataGrid.Location = new System.Drawing.Point(533, 35);
             this.subscribersDataGrid.Name = "subscribersDataGrid";
             this.subscribersDataGrid.ReadOnly = true;
-            this.subscribersDataGrid.Size = new System.Drawing.Size(515, 202);
+            this.subscribersDataGrid.Size = new System.Drawing.Size(388, 540);
             this.subscribersDataGrid.TabIndex = 7;
             // 
             // ColumnName
@@ -230,17 +235,58 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(210, 327);
+            this.label3.Location = new System.Drawing.Point(664, 11);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(122, 21);
             this.label3.TabIndex = 8;
             this.label3.Text = "Пользователи:";
             // 
+            // dataGridViewHistory
+            // 
+            this.dataGridViewHistory.AllowUserToAddRows = false;
+            this.dataGridViewHistory.AllowUserToDeleteRows = false;
+            this.dataGridViewHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewHistory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2});
+            this.dataGridViewHistory.Location = new System.Drawing.Point(12, 347);
+            this.dataGridViewHistory.Name = "dataGridViewHistory";
+            this.dataGridViewHistory.ReadOnly = true;
+            this.dataGridViewHistory.Size = new System.Drawing.Size(502, 228);
+            this.dataGridViewHistory.TabIndex = 9;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Имя подписчика:";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 156;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Открытый ключ";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 140;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(176, 323);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(181, 21);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "История сообщений:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(539, 565);
+            this.ClientSize = new System.Drawing.Size(933, 587);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.dataGridViewHistory);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.subscribersDataGrid);
             this.Controls.Add(this.groupBox2);
@@ -257,6 +303,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.subscribersDataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistory)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -283,6 +330,10 @@
         private System.Windows.Forms.Button btSetRandomCommonParams;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnOpenedKey;
+        private System.Windows.Forms.DataGridView dataGridViewHistory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.Label label7;
     }
 }
 
