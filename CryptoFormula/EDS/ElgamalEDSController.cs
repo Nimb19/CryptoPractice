@@ -8,11 +8,11 @@ namespace CryptoFormulaLibrary.EDS
 {
     public class ElGamalEDSController : IEDSController
     {
-        public ElgamalSubscriber Sender { get; set; }
+        public ElgamalSubscriber CurrentSub { get; set; }
 
         public ElGamalEDSController(ElgamalSubscriber sub)
         {
-            Sender = sub;
+            CurrentSub = sub;
         }
 
         public static BigInteger CalculateOpenedKey(WrappedInteger closedKey, int g, int p)
@@ -20,32 +20,43 @@ namespace CryptoFormulaLibrary.EDS
             return g.ВозвестиВСтепень(closedKey) % p;
         }
 
-        //public static (BigInteger R, BigInteger E) GetMessageKeys(ElgamalSubscriber to, int msg, int k)
-        //{
-        //    var r = to.G.ВозвестиВСтепень(k) % to.P;
-        //    var e = msg * to.OpenedKey % to.P;
-        //    return (r, e);
-        //}
-
         public static (BigInteger P, BigInteger G) GenerateKeys(Random random)
         {
             PrimeNumberGenerator.PrimeRandom = random;
-            var p = PrimeNumberGenerator.GeneratePrimeNumber(1000, int.MaxValue);
+            var p = PrimeNumberGenerator.GeneratePrimeNumber(50, 5000);
             var g = random.Next(2, p - 1);
             return (p, g);
         }
 
-        public BigInteger EncryptHashCode(BigInteger hash)
+        public BigInteger[] EncryptHashCode(ElgamalSubscriber to, BigInteger hash)
         {
-            //var k = PrimeNumberGenerator.GeneratePrimeNumber(1, (Sender.P - 2).ToInt32());
-            //var r = Sender.G.ВозвестиВСтепень(k) % Sender.P;
-            //var m = (hash * Sender.OpenedKey.ВозвестиВСтепень(k)) % (Sender.P - 1);
-            return hash;
+            var resultCollection = new BigInteger[2];
+
+            var k = PrimeNumberGenerator.GeneratePrimeNumber(1, (CurrentSub.P - 2).ToInt32());
+            var r = to.G.ВозвестиВСтепень(k) % to.P;
+            var e = (hash * to.OpenedKey.ВозвестиВСтепень(k)) % (CurrentSub.P - 1);
+
+            resultCollection[0] = r;
+            resultCollection[1] = e;
+            return resultCollection;
         }
 
-        public BigInteger DecryptHashCode(BigInteger ecryptedHash)
+        public BigInteger DecryptHashCode(ElgamalSubscriber from, BigInteger[] encryptedHashResultCollection)
         {
-            return ecryptedHash; // TODO:
+            var r = encryptedHashResultCollection[0];
+            var e = encryptedHashResultCollection[1];
+            var decryptedHash = (e * r.ВозвестиВСтепень(CurrentSub.P - 1 - CurrentSub.ClosedKey)) % CurrentSub.P;
+            return decryptedHash;
+        }
+
+        public BigInteger[] EncryptHashCode(IEDSSubscriber to, BigInteger hashCode)
+        {
+            return EncryptHashCode(to as ElgamalSubscriber ?? throw new ArgumentException(), hashCode);
+        }
+
+        public BigInteger DecryptHashCode(IEDSSubscriber from, BigInteger[] ecryptedHashNums)
+        {
+            return DecryptHashCode(from as ElgamalSubscriber ?? throw new ArgumentException(), ecryptedHashNums);
         }
     }
 }

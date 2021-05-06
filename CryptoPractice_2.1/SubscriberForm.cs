@@ -68,10 +68,25 @@ namespace CryptoPractice_2._1
 
         private void ButtonSendMessage_Click(object sender, EventArgs e)
         {
-            var selectedRecipientName = subComboBox.SelectedItem.ToString();
-            var recipient = AllSubscribers.First(x => x.ElgamalSubscriber.Name == selectedRecipientName);
-            var text = tbMessage.Text.Trim();
-            ChatController.WriteMessageTo(recipient.SubscriberForm.ChatController, text);
+            CatchException(() =>
+            {
+                var selectedRecipientName = subComboBox.SelectedItem.ToString();
+                var recipient = AllSubscribers.First(x => x.ElgamalSubscriber.Name == selectedRecipientName);
+                var text = tbMessage.Text.Trim();
+                ChatController.WriteMessageTo(recipient.SubscriberForm.ChatController, text);
+            });
+        }
+
+        private void CatchException(Action action)
+        {
+            try
+            {
+                action.Invoke();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
         }
     }
 }

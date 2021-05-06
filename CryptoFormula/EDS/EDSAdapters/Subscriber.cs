@@ -2,12 +2,12 @@
 
 namespace CryptoFormulaLibrary.EDSAdapters
 {
-    public abstract class Subscriber
+    public abstract class Subscriber : IEDSSubscriber
     {
         public WrappedInteger OpenedKey { get; }
         public WrappedInteger ClosedKey { get; }
         public string Name { get; }
-        public IEDSController Controller { get; protected set; }
+        public IEDSController Controller { get; set; }
 
         public Subscriber(WrappedInteger openedKey, WrappedInteger closedKey, string name)
         {

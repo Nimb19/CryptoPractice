@@ -2,6 +2,7 @@
 using System.Numerics;
 using System.Windows.Forms;
 using CryptoFormulaLibrary.EDSAdapters;
+using CryptoFormulaLibrary.Models;
 
 namespace CryptoFormulaLibrary.EDS
 {
@@ -23,16 +24,16 @@ namespace CryptoFormulaLibrary.EDS
             if (string.IsNullOrWhiteSpace(message))
                 return;
 
-            var encryptedHash = Subscriber.Controller.EncryptHashCode(message.GetHashCode());
-            recipientChatController.WriteReceivedMessage(message, encryptedHash, Subscriber);
+            var encryptedHashResults = Subscriber.Controller.EncryptHashCode(recipientChatController.Subscriber, message.GetHashCode());
+            recipientChatController.WriteReceivedMessage(message, encryptedHashResults, Subscriber);
 
             WriteInfo($"To {recipientChatController.Subscriber.Name}: {message}");
         }
 
-        private void WriteReceivedMessage(string message, BigInteger encryptedHash, TSub sender)
+        private void WriteReceivedMessage(string message, BigInteger[] encryptedHashResults, TSub sender)
         {
             var hash = message.GetHashCode();
-            var decryptedHash = sender.Controller.DecryptHashCode(encryptedHash);
+            var decryptedHash = sender.Controller.DecryptHashCode(sender, encryptedHashResults);
 
             if (hash == decryptedHash)
                 WriteInfo($"Hash {hash} == DecryptedHash {decryptedHash}. Хэш не отличается. Сообщение не было изменено", showDate: false);

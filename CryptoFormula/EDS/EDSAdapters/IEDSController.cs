@@ -1,10 +1,11 @@
 ﻿using System.Numerics;
+using CryptoFormulaLibrary.Models;
 
 namespace CryptoFormulaLibrary.EDSAdapters
 {
     public interface IEDSController
     {
-        BigInteger EncryptHashCode(BigInteger hashCode);
-        BigInteger DecryptHashCode(BigInteger ecryptedHash);
+        BigInteger[] EncryptHashCode(IEDSSubscriber to, BigInteger hashCode);
+        BigInteger DecryptHashCode(IEDSSubscriber from, BigInteger[] ecryptedHashNums);
     }
 }
