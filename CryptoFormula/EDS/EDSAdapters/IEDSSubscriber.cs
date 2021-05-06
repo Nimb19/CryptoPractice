@@ -1,7 +1,9 @@
 ﻿
+using System;
+
 using CryptoFormulaLibrary.Models;
 
-namespace CryptoFormulaLibrary.EDSAdapters
+namespace CryptoFormulaLibrary.EDS.EDSAdapters
 {
     public interface IEDSSubscriber
     {

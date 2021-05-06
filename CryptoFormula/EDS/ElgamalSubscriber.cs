@@ -1,5 +1,5 @@
 ﻿using CryptoFormulaLibrary.EDS;
-using CryptoFormulaLibrary.EDSAdapters;
+using CryptoFormulaLibrary.EDS.EDSAdapters;
 
 namespace CryptoFormulaLibrary.Models
 {
@@ -13,7 +13,7 @@ namespace CryptoFormulaLibrary.Models
         {
             P = p;
             G = g;
-            Controller = new ElGamalEDSController(this);
+            Controller = new ElgamalEDSController(this);
         }
     }
 }

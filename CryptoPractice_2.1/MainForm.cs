@@ -65,7 +65,7 @@ namespace CryptoPractice_2._1
                 var g = int.Parse(tbParamG.Text);
                 var p = int.Parse(tbParamP.Text);
 
-                tbOpenedKey.Text = ElGamalEDSController.CalculateOpenedKey(closedKey, g, p).ToString();
+                tbOpenedKey.Text = ElgamalEDSController.CalculateOpenedKey(closedKey, g, p).ToString();
             });
         }
 
@@ -99,7 +99,7 @@ namespace CryptoPractice_2._1
 
         private void BtSetRandomCommonParams_Click(object sender, EventArgs e)
         {
-            var keys = ElGamalEDSController.GenerateKeys(_random);
+            var keys = ElgamalEDSController.GenerateKeys(_random);
             tbParamP.Text = keys.P.ToString();
             tbParamG.Text = keys.G.ToString();
         }

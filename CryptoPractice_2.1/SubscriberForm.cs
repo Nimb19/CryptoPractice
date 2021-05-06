@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Forms;
-using CryptoFormulaLibrary.EDS;
+using CryptoFormulaLibrary.ChatController;
 using CryptoFormulaLibrary.Models;
 
 namespace CryptoPractice_2._1
@@ -63,7 +63,19 @@ namespace CryptoPractice_2._1
 
             var subs = AllSubscribers.Select(x => x.ElgamalSubscriber.Name).Where(x => x != sub.Name);
             subComboBox.Items.AddRange(subs.ToArray());
-            ChatController = new ChatController<ElgamalSubscriber>(chatBox, sub);
+            ChatController = new ChatController<ElgamalSubscriber>(sub);
+            ChatController.OnNewMessage += ChatController_OnNewMessage;
+            ChatController.OnNewInfo += ChatController_OnNewInfo;
+        }
+
+        private void ChatController_OnNewInfo(object sender, string e)
+        {
+            chatBox.Text += e;
+        }
+
+        private void ChatController_OnNewMessage(object sender, MessageEventArgs<ElgamalSubscriber> e)
+        {
+            chatBox.Text += e.Message;
         }
 
         private void ButtonSendMessage_Click(object sender, EventArgs e)
