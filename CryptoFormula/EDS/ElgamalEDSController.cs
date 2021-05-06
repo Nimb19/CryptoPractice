@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Numerics;
-using CryptoFormulaLibrary.EDS.EDSAdapters;
+using CryptoFormulaLibrary.EDS.EDSModels;
 using CryptoFormulaLibrary.Models;
 using HelpfulLibrary;
 

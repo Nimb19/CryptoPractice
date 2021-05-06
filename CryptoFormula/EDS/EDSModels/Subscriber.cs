@@ -2,7 +2,7 @@
 
 using CryptoFormulaLibrary.Models;
 
-namespace CryptoFormulaLibrary.EDS.EDSAdapters
+namespace CryptoFormulaLibrary.EDS.EDSModels
 {
     public abstract class Subscriber : IEDSSubscriber
     {

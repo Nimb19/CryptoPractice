@@ -1,6 +1,6 @@
 ﻿using System;
 using CryptoFormulaLibrary.EDS;
-using CryptoFormulaLibrary.EDS.EDSAdapters;
+using CryptoFormulaLibrary.EDS.EDSModels;
 
 namespace CryptoFormulaLibrary.ChatController
 {
@@ -21,11 +21,6 @@ namespace CryptoFormulaLibrary.ChatController
                 OnNewMessage += onNewMessage;
             if (onNewInfo != null)
                 OnNewInfo += onNewInfo;
-        }
-
-        private void ChatController_OnNewMessage(object sender, MessageEventArgs<TSub> e)
-        {
-            throw new NotImplementedException();
         }
 
         public void WriteMessageTo(ChatController<TSub> recipientChatController, string message)
@@ -72,9 +67,6 @@ namespace CryptoFormulaLibrary.ChatController
 
         private void WriteMessage(MessageEventArgs<TSub> msgArgs)
         {
-            if (string.IsNullOrWhiteSpace(msgArgs.Text))
-                return;
-
             // Если отправитель это текущий подписчик, то выводится - кому было направлено -> "To {messageEventArgs.To}"
             if (msgArgs.From.Equals(Subscriber))
                 msgArgs.Message = $"{FormatDate(msgArgs.DateCreated)} " +

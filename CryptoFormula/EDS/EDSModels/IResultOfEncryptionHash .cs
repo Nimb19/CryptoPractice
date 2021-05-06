@@ -1,4 +1,4 @@
-﻿namespace CryptoFormulaLibrary.EDS.EDSAdapters
+﻿namespace CryptoFormulaLibrary.EDS.EDSModels
 {
     /// <summary>
     /// Каждый хеш-контроллер сам решит какой класс нужно будет подставить,

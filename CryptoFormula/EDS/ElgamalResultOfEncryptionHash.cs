@@ -1,12 +1,12 @@
 ﻿using System.Numerics;
-using CryptoFormulaLibrary.EDS.EDSAdapters;
+using CryptoFormulaLibrary.EDS.EDSModels;
 
 namespace CryptoFormulaLibrary.EDS
 {
-    public class ElgamalResultOfEncryptionHash : IResultOfEncryptionHash
+    internal class ElgamalResultOfEncryptionHash : IResultOfEncryptionHash
     {
-        public BigInteger R { get; set; }
-        public BigInteger E { get; set; }
+        public BigInteger R { get; }
+        public BigInteger E { get; }
 
         public ElgamalResultOfEncryptionHash(BigInteger r, BigInteger e)
         {

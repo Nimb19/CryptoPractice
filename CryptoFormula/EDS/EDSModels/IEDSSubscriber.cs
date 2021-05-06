@@ -3,7 +3,7 @@ using System;
 
 using CryptoFormulaLibrary.Models;
 
-namespace CryptoFormulaLibrary.EDS.EDSAdapters
+namespace CryptoFormulaLibrary.EDS.EDSModels
 {
     public interface IEDSSubscriber
     {

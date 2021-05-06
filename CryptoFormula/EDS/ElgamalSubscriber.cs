@@ -1,5 +1,5 @@
 ﻿using CryptoFormulaLibrary.EDS;
-using CryptoFormulaLibrary.EDS.EDSAdapters;
+using CryptoFormulaLibrary.EDS.EDSModels;
 
 namespace CryptoFormulaLibrary.Models
 {
