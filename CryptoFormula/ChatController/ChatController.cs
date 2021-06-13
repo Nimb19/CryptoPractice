@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Numerics;
+using System.Linq;
 using CryptoFormulaLibrary.EDS;
 using CryptoFormulaLibrary.EDS.EDSModels;
 
@@ -30,11 +32,29 @@ namespace CryptoFormulaLibrary.ChatController
             if (recipientChatController == null)
                 throw new ArgumentNullException($"{nameof(recipientChatController)} не должен быть равен NULL");
 
-            var encryptedHashResults = Subscriber.Controller.EncryptHashCode(message.GetHashCode(), recipientChatController.Subscriber.OpenedKey);
+            var encryptedHashResults = Subscriber.Controller.EncryptHashCode(GetHash(message), recipientChatController.Subscriber.OpenedKey);
             var msgArgs = new MessageEventArgs<TSub>(message, Subscriber, recipientChatController.Subscriber, encryptedHashResults);
             
             recipientChatController.WriteReceivedMessage(msgArgs);
             WriteMessage(msgArgs);
+        }
+
+        private void WriteReceivedMessage(MessageEventArgs<TSub> msgArgs)
+        {
+            var isVerified = msgArgs.To.Controller.DecryptHashCode(msgArgs.ResultOfEncryptionHash);
+
+            if (isVerified)
+                WriteInfo($"Сообщение не было изменено");
+            else
+                WriteInfo($"Сообщение было изменено");
+
+            WriteMessage(msgArgs);
+        }
+
+        private BigInteger GetHash(string message)
+        {
+            char[] mess = message.ToCharArray();
+            return mess.Select(x => (int)x).Aggregate((x, y) => x + y);
         }
 
         public void WriteInfo(string info, bool showDate = false)
@@ -50,19 +70,6 @@ namespace CryptoFormulaLibrary.ChatController
                 text = $"[{info}]{Environment.NewLine}";
 
             OnNewInfo.Invoke(this, text);
-        }
-
-        private void WriteReceivedMessage(MessageEventArgs<TSub> msgArgs)
-        {
-            var hash = msgArgs.Text.GetHashCode();
-            var decryptedHash = msgArgs.To.Controller.DecryptHashCode(msgArgs.ResultOfEncryptionHash);
-
-            if (hash == decryptedHash)
-                WriteInfo($"Hash {hash} == DecryptedHash {decryptedHash}. Хэш не отличается. Сообщение не было изменено");
-            else
-                WriteInfo($"Hash {hash} != DecryptedHash {decryptedHash}. Хэш отличается. Сообщение было изменено");
-
-            WriteMessage(msgArgs);
         }
 
         private void WriteMessage(MessageEventArgs<TSub> msgArgs)

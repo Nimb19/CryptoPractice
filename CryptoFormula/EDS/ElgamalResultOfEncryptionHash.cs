@@ -1,17 +1,23 @@
 ﻿using System.Numerics;
 using CryptoFormulaLibrary.EDS.EDSModels;
+using CryptoFormulaLibrary.Models;
 
 namespace CryptoFormulaLibrary.EDS
 {
-    internal class ElgamalResultOfEncryptionHash : IResultOfEncryptionHash
+    public class ElgamalResultOfEncryptionHash : IResultOfEncryptionHash
     {
-        public BigInteger R { get; }
-        public BigInteger E { get; }
+        public BigInteger A { get; }
+        public BigInteger B { get; }
 
-        public ElgamalResultOfEncryptionHash(BigInteger r, BigInteger e)
+        public BigInteger Y { get; }
+        public BigInteger M { get; }
+
+        public ElgamalResultOfEncryptionHash(BigInteger a, BigInteger b, WrappedInteger y, WrappedInteger hash)
         {
-            R = r;
-            E = e;
+            A = a;
+            B = b;
+            Y = y.Value;
+            M = hash.Value;
         }
     }
 }

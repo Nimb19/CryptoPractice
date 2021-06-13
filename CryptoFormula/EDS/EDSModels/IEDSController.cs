@@ -6,6 +6,6 @@ namespace CryptoFormulaLibrary.EDS.EDSModels
     public interface IEDSController
     {
         IResultOfEncryptionHash EncryptHashCode(BigInteger hashCode, WrappedInteger recipientOpenedKey);
-        BigInteger DecryptHashCode(IResultOfEncryptionHash resultOfEncryptionHash);
+        bool DecryptHashCode(IResultOfEncryptionHash resultOfEncryptionHash);
     }
 }

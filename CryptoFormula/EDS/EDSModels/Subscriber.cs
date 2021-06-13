@@ -1,5 +1,4 @@
 ﻿using System;
-
 using CryptoFormulaLibrary.Models;
 
 namespace CryptoFormulaLibrary.EDS.EDSModels
@@ -10,7 +9,7 @@ namespace CryptoFormulaLibrary.EDS.EDSModels
         public WrappedInteger ClosedKey { get; }
         public string Name { get; }
 
-        public IEDSController Controller { get; protected set; }
+        public abstract IEDSController Controller { get; }
 
         public Subscriber(WrappedInteger openedKey, WrappedInteger closedKey, string name)
         {

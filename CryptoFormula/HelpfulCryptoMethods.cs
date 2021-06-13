@@ -36,7 +36,7 @@ namespace CryptoFormulaLibrary
             else return НайтиНОД(b, a % b);
         }
 
-        public static BigInteger ВозвестиВСтепень(this WrappedInteger число, WrappedInteger степень)
+        public static BigInteger ВСтепень(this WrappedInteger число, WrappedInteger степень)
         {
             var result = число.Value;
             for (int i = 2; i <= степень; i++)
@@ -51,8 +51,8 @@ namespace CryptoFormulaLibrary
         public static List<int> РазложитьНаПростыеМножители(this BigInteger num) =>
             ((WrappedInteger)num).РазложитьНаПростыеМножители();
 
-        public static BigInteger ВозвестиВСтепень(this BigInteger число, WrappedInteger степень) =>
-            ((WrappedInteger)число).ВозвестиВСтепень(степень);
+        public static BigInteger ВСтепень(this BigInteger число, WrappedInteger степень) =>
+            ((WrappedInteger)число).ВСтепень(степень);
 
         #endregion BigInteger ext
 
@@ -61,8 +61,8 @@ namespace CryptoFormulaLibrary
         public static List<int> РазложитьНаПростыеМножители(this int num) =>
             ((WrappedInteger)num).РазложитьНаПростыеМножители();
 
-        public static BigInteger ВозвестиВСтепень(this int число, WrappedInteger степень) =>
-            ((WrappedInteger)число).ВозвестиВСтепень(степень);
+        public static BigInteger ВСтепень(this int число, WrappedInteger степень) =>
+            ((WrappedInteger)число).ВСтепень(степень);
 
         #endregion Int ext
     }

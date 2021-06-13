@@ -8,45 +8,57 @@ namespace CryptoFormulaLibrary.EDS
 {
     public class ElgamalEDSController : IEDSController
     {
-        public ElgamalSubscriber CurrentSub { get; set; }
+        public ElgamalSubscriber Subscriber { get; }
 
         public ElgamalEDSController(ElgamalSubscriber sub)
         {
-            CurrentSub = sub;
+            Subscriber = sub;
         }
 
         public IResultOfEncryptionHash EncryptHashCode(BigInteger hash, WrappedInteger recipientOpenedKey)
         {
-            var k = PrimeNumberGenerator.GeneratePrimeNumber(1, (CurrentSub.P - 2).ToInt32());
-            var r = CurrentSub.G.ВозвестиВСтепень(k) % CurrentSub.P;
-            var e = (hash * recipientOpenedKey.ВозвестиВСтепень(k)) % (CurrentSub.P - 1);
+            var p = Subscriber.P;
+            var g = Subscriber.G;
+            //var k = 9;
+            WrappedInteger k = PrimeNumberGenerator.GeneratePrimeNumber(1, (p - 2).ToInt32());
+            while (CryptoFormula.НайтиНОД(k, p - 1) != 1)
+                k = PrimeNumberGenerator.GeneratePrimeNumber(1, (p - 2).ToInt32());
+            k %= p - 1;
+            hash %= p - 1;
 
-            return new ElgamalResultOfEncryptionHash(r, e);
+            var a = g.ВСтепень(k) % p;
+            var b = (CryptoFormula.АлгоритмЕвклида(p - 1, k, out var euErr) ?? throw new Exception(euErr))
+                * ((p - 1) + (hash - ((Subscriber.ClosedKey * a) % (p - 1)))) % (p - 1);
+
+            return new ElgamalResultOfEncryptionHash(a, b, Subscriber.OpenedKey, hash);
         }
 
-        public BigInteger DecryptHashCode(IResultOfEncryptionHash resultOfEncryptionHash)
+        public bool DecryptHashCode(IResultOfEncryptionHash resultOfEncryptionHash)
         {
             var hashRes = resultOfEncryptionHash as ElgamalResultOfEncryptionHash 
                 ?? throw new ArgumentException("Результат хеша был не того типа.");
 
-            var r = hashRes.R;
-            var e = hashRes.E;
-            var p = CurrentSub.P;
-            var closedKey = CurrentSub.ClosedKey;
+            var p = Subscriber.P;
+            var a = hashRes.A;
+            var b = hashRes.B;
+            var y = hashRes.Y;
+            var g = Subscriber.G;
+            var m = hashRes.M;
 
-            var decryptedHash = (e * r.ВозвестиВСтепень(p - 1 - closedKey)) % p;
-            return decryptedHash;
+            var leftSolution = (y.ВСтепень(a) % p) * (a.ВСтепень(b) % p) % p;
+            var rightSolution = (g.ВСтепень(m) % p);
+            return leftSolution == rightSolution;
         }
 
         public static BigInteger CalculateOpenedKey(WrappedInteger closedKey, int g, int p)
         {
-            return g.ВозвестиВСтепень(closedKey) % p;
+            return g.ВСтепень(closedKey) % p;
         }
 
         public static (BigInteger P, BigInteger G) GenerateKeys(Random random)
         {
             PrimeNumberGenerator.PrimeRandom = random;
-            var p = PrimeNumberGenerator.GeneratePrimeNumber(50, 5000);
+            var p = PrimeNumberGenerator.GeneratePrimeNumber(100, 1000); // (1000000, int.MaxValue); // 
             var g = random.Next(2, p - 1);
             return (p, g);
         }

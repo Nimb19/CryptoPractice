@@ -1,6 +1,4 @@
-﻿
-using System;
-
+﻿using System;
 using CryptoFormulaLibrary.Models;
 
 namespace CryptoFormulaLibrary.EDS.EDSModels

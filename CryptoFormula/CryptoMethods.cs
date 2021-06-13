@@ -20,11 +20,11 @@ namespace CryptoFormulaLibrary
             divisorsList = module.РазложитьНаПростыеМножители();
 
             if (divisorsList.Count == 1)
-                return num.ВозвестиВСтепень(module - 2) % module;
+                return num.ВСтепень(module - 2) % module;
             else
             {
                 if (divisorsList.Distinct().Count() == divisorsList.Count())
-                    return num.ВозвестиВСтепень(divisorsList.Select(x => x -= 1).Aggregate((x, y) => x * y) - 1);
+                    return num.ВСтепень(divisorsList.Select(x => x -= 1).Aggregate((x, y) => x * y) - 1);
                 else
                 {
                     solutionError = $"Нет решения. Множители повторяются.";
@@ -40,6 +40,12 @@ namespace CryptoFormulaLibrary
         /// <param name="solutionError"> Подробности об ошибке, если была. </param>
         public static BigInteger? АлгоритмЕвклида(WrappedInteger module, WrappedInteger num, out string solutionError)
         {
+            if (num == 1)
+            {
+                solutionError = null;
+                return 1;
+            }
+
             solutionError = null;
             (BigInteger? ЧислоНапротивЕдиницы, bool? БылЛиМинусНапротивЕдиницы) result = (null, null);
 
